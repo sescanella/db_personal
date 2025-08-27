@@ -1,0 +1,11 @@
+@import 'tailwindcss';
+
+/* Tema mínimo: color corporativo */
+@theme {
+  --color-primary: #d56301;
+}
+
+/* Reset/opcional */
+:root {
+  color-scheme: light;
+}
