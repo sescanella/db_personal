@@ -9,8 +9,9 @@
 
 ## ✨ Funcionalidad
 
-- **Listar y filtrar** registros de `public.empleados` (solo lectura).
-- **Lectura pública** mediante RLS en Supabase (`select` para rol `anon`).
+- **Vista 1 (Listado):** Listar y filtrar registros de `public.empleados` (solo lectura).
+- **Vista 2 (Formulario de alta):** Ingreso de nuevos registros mediante formulario controlado.
+- **Lectura e inserción pública** mediante RLS en Supabase (`select` e `insert` para rol `anon`).
 - **Desktop-first** con soporte **mobile**.
 - **Paginación server-side:** tamaño de página **20**.
 - **Orden inicial:** `created_at` **descendente**.
@@ -39,19 +40,43 @@ npm i -D vite typescript tailwindcss postcss autoprefixer eslint @typescript-esl
 
 ## 🔐 Supabase (RLS & Policies)
 
-> El proyecto es **solo lectura pública**. Activa RLS y permite `select` al rol `anon`:
+> El proyecto habilita **lectura e inserción pública**. Activa RLS y permite `select` e `insert` al rol `anon`:
 
 ```sql
 alter table public.empleados enable row level security;
 
-create policy "empleados_select_public"
+-- Lectura pública
+create policy "empleados_read_anon"
 on public.empleados
 for select
-to anon
+to public
 using (true);
+
+-- Inserción pública
+create policy "empleados_insert_anon"
+on public.empleados
+for insert
+to public
+with check (true);
 ```
 
-> **Nota:** Como la clave `anon` estará en el cliente, mantén **RLS estricta** y limita el acceso solo a `select`.
+> **Nota:** No existen policies para `update` ni `delete`, por lo que estos quedan denegados.
+
+---
+
+## 🗄️ Esquema de la tabla empleados
+
+La tabla `public.empleados` contiene datos completos del personal con constraints estrictos.  
+Algunos destacados:
+
+- **Campos obligatorios:** `nombre`, `apellido`, `numero_documento`, `pais_nacimiento`, `sexo`, `estado_civil`, `fecha_nacimiento`, `telefono_particular`, `email_personal`, `comuna`, `ciudad`, `banco`, `tipo_cuenta`, `numero_cuenta`, `contacto_emergencia_nombre`, `contacto_emergencia_telefono`, `fondo_cotizacion`, `salud`, `afc`.
+- **Campos opcionales:** `segundo_apellido`, `depto_oficina`, `direccion`, `calle`, `numero_calle`, `talla_superior`, `talla_inferior`, `talla_zapato`.
+- **Constraints de validación:**  
+  - Listas cerradas para: `sexo`, `estado_civil`, `fondo_cotizacion`, `salud`, `banco`, `afc`, `talla_superior`, `talla_inferior`, `talla_zapato`, `tipo_cuenta`.  
+  - Validación de email (`email_personal` debe contener `@`).  
+- **Trigger:** `trg_empleados_direccion` ejecuta `actualizar_direccion()` antes de `insert/update`.
+
+> Ver definición completa en `sql/schema.sql`.
 
 ---
 
@@ -180,14 +205,18 @@ RewriteRule . /index.html [L]
 - **Filtros (AND):** `.eq('sexo', v)`, `.eq('salud', v)`, `.eq('fondo_cotizacion', v)`, `.eq('estado_civil', v)`.
 - **Columnas visibles iniciales:**  
   `nombre`, `apellido`, `segundo_apellido`, `numero_documento`, `email_personal`, `telefono_particular`, `ciudad`, `direccion`, `banco`, `tipo_cuenta`, `numero_cuenta`, `salud`, `fondo_cotizacion`, `afc`, `created_at`.
+- **Inserción (Formulario de alta):**  
+  - Se validan campos obligatorios.  
+  - Campos con listas cerradas se validan en frontend y backend (Postgres constraints).  
+  - Tras insertar, refresca listado.
 
 ---
 
 ## 📦 Artefactos de contexto (siguientes pasos)
 
-1. **FRONTEND-CONTEXT.md**: rutas, componentes, estados, UX, accesibilidad, branding (#d56301 + logo), tabla y filtros.
-2. **DB-MIGRATIONS.md**: esquema mínimo de `public.empleados`, RLS aplicada, políticas `select`, checks y constraints relevantes.
-3. **SUPABASE-CLIENT-SDK.md**: inicialización del cliente (`src/lib/supabase.ts`), contrato de servicios (`listEmpleados`), manejo de errores y tipado.
+1. **FRONTEND-CONTEXT.md**: rutas, componentes, estados, UX, accesibilidad, branding (#d56301 + logo), tabla, filtros y formulario de alta.
+2. **DB-MIGRATIONS.md**: esquema completo de `public.empleados`, RLS aplicada, políticas `select` + `insert`, checks, constraints y trigger.
+3. **SUPABASE-CLIENT-SDK.md**: inicialización del cliente (`src/lib/supabase.ts`), contrato de servicios (`listEmpleados`, `insertEmpleado`), manejo de errores y tipado.
 
 > Con estos tres, genera el **CLAUDE.md** como hub de contexto del repo.
 
@@ -195,9 +224,9 @@ RewriteRule . /index.html [L]
 
 ## 🧭 Roadmap corto
 
-- [ ] Configurar `src/lib/supabase.ts` con `.env`.
-- [ ] Implementar listado + filtros + paginación (solo lectura).
-- [ ] Aplicar RLS `select` público en Supabase.
+- [ ] Implementar listado + filtros + paginación (readonly).
+- [ ] Implementar formulario de alta con validaciones e inserción. 
+- [ ] Aplicar RLS `select` e `insert` públicos en Supabase.
 - [ ] Branding básico (#d56301 + logo en header).
 - [ ] Build y deploy a `personal.kronosmining.tech`.
 - [ ] Documentar estructura final en este README.
@@ -207,7 +236,8 @@ RewriteRule . /index.html [L]
 
 ## ❓ FAQ (breve)
 
-- **¿Autenticación?** No (solo lectura pública con RLS).
-- **¿Edición/CRUD?** No en esta beta.
-- **¿Tests/PRs/Convenciones?** No aplica por ahora.
+- **¿Autenticación?** No (lectura e inserción pública con RLS).  
+- **¿Edición/CRUD?** Solo se permite **lectura e inserción** (no update/delete).  
+- **¿Validación de campos?** El frontend valida selects contra opciones predefinidas; Postgres refuerza con constraints.  
+- **¿Tests/PRs/Convenciones?** No aplica por ahora.  
 - **¿Licencia/Créditos/Badges/Media?** No en esta fase.

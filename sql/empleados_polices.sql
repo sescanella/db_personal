@@ -5,10 +5,11 @@ alter table if exists public.empleados enable row level security;
 
 -- 2) Otorgar privilegios mínimos a 'anon'
 grant usage on schema public to anon;
-grant select on table public.empleados to anon;
+grant select, insert on table public.empleados to anon;
 
--- 3) Eliminar policy duplicada (idempotencia)
+-- 3) Eliminar policies duplicadas (idempotencia)
 drop policy if exists empleados_read_anon on public.empleados;
+drop policy if exists empleados_insert_anon on public.empleados;
 
 -- 4) Crear policy de SELECT para 'anon'
 create policy empleados_read_anon
@@ -17,4 +18,9 @@ create policy empleados_read_anon
   to anon
   using (true);
 
--- Nota: No hay policies de INSERT/UPDATE/DELETE -> quedan bloqueadas por RLS.
+-- 5) Crear policy de INSERT para 'anon'
+create policy empleados_insert_anon
+  on public.empleados
+  for insert
+  to anon
+  with check (true);
