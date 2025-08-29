@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { ProgressBarSticky, FormSection, TextInput, DatePickerMobile, Select, CountrySelectISO, EmailInput, PhoneInputIntl, CascadingRegionComuna, AccountNumberInput, SizeSelect, SubmitButton, SuccessView, NavigationButtons } from '../components/formulario'
+import { ProgressBarSticky, FormSection, TextInput, DatePickerMobile, Select, CountrySelectISO, EmailInput, PhoneInputIntl, CascadingRegionComuna, AccountNumberInput, SizeSelect, SuccessView, NavigationButtons } from '../components/formulario'
 import { ESTADOS_CIVIL, SEXOS, BANCOS, TIPOS_CUENTA, AFPS, SALUD, AFC, TALLAS_SUPERIOR, TALLAS_INFERIOR, TALLAS_ZAPATO } from '../utils/constants'
 import { toTitleCase } from '../utils/formatters'
+import { supabase } from '../lib/supabase'
 
 interface FormData {
   // Datos Personales
@@ -114,24 +115,6 @@ export function FormularioInscripcion() {
     setFormData(prev => ({ ...prev, comuna: value }))
   }
 
-  // Validar si todos los campos requeridos están completos
-  const isFormValid = () => {
-    const requiredFields = [
-      'nombre', 'apellido', 'numero_documento', 'fecha_nacimiento', 
-      'sexo', 'estado_civil', 'pais_nacimiento',
-      'telefono_particular', 'email_personal',
-      'calle', 'ciudad', 'comuna',
-      'contacto_emergencia_nombre', 'contacto_emergencia_telefono',
-      'banco', 'tipo_cuenta', 'numero_cuenta',
-      'fondo_cotizacion', 'salud', 'afc',
-      'talla_superior', 'talla_inferior', 'talla_zapato'
-    ]
-    
-    return requiredFields.every(field => {
-      const value = formData[field as keyof FormData]
-      return value && value.toString().trim() !== ''
-    }) && formData.email_personal.includes('@')
-  }
 
   // Validar si la sección actual está completa
   const isCurrentStepValid = () => {
@@ -188,13 +171,52 @@ export function FormularioInscripcion() {
     setIsSubmitting(true)
     
     try {
-      // Simular envío (aquí iría la llamada a la API)
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      
+      // Preparar datos para Supabase
+      const empleadoData = {
+        nombre: formData.nombre,
+        apellido: formData.apellido,
+        segundo_apellido: formData.segundo_apellido || null,
+        numero_documento: formData.numero_documento,
+        fecha_nacimiento: formData.fecha_nacimiento,
+        sexo: formData.sexo,
+        estado_civil: formData.estado_civil,
+        pais_nacimiento: formData.pais_nacimiento,
+        telefono_particular: formData.telefono_particular,
+        email_personal: formData.email_personal,
+        calle: formData.calle,
+        numero_calle: formData.numero_calle || null,
+        depto_oficina: formData.depto_oficina || null,
+        ciudad: formData.ciudad, // Región
+        comuna: formData.comuna,
+        direccion: `${formData.calle}${formData.numero_calle ? ` ${formData.numero_calle}` : ''}${formData.depto_oficina ? `, ${formData.depto_oficina}` : ''}, ${formData.comuna}, ${formData.ciudad}`,
+        contacto_emergencia_nombre: formData.contacto_emergencia_nombre,
+        contacto_emergencia_telefono: formData.contacto_emergencia_telefono,
+        banco: formData.banco,
+        tipo_cuenta: formData.tipo_cuenta,
+        numero_cuenta: formData.numero_cuenta,
+        fondo_cotizacion: formData.fondo_cotizacion,
+        salud: formData.salud,
+        afc: formData.afc,
+        talla_superior: formData.talla_superior || null,
+        talla_inferior: formData.talla_inferior || null,
+        talla_zapato: formData.talla_zapato ? parseInt(formData.talla_zapato.toString()) : null
+      }
+
+      const { data, error } = await supabase
+        .from('empleados')
+        .insert([empleadoData])
+        .select()
+
+      if (error) {
+        throw error
+      }
+
+      console.log('Empleado creado exitosamente:', data)
       setIsSubmitted(true)
-      console.log('Formulario enviado:', formData)
     } catch (error) {
       console.error('Error al enviar formulario:', error)
+      const errorMessage = error instanceof Error ? error.message : 'Error desconocido'
+      alert(`Error al enviar formulario: ${errorMessage}`)
     } finally {
       setIsSubmitting(false)
     }
