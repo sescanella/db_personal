@@ -1,11 +1,5 @@
 import { useState, useEffect } from 'react';
 import type { ListEmpleadosParams } from '@/types/empleados';
-import {
-  SEXO_OPTIONS,
-  SALUD_OPTIONS,
-  FONDO_COTIZACION_OPTIONS,
-  ESTADO_CIVIL_OPTIONS,
-} from '@/types/empleados';
 
 interface FiltersBarProps {
   value: ListEmpleadosParams;

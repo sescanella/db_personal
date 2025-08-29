@@ -10,25 +10,25 @@ export const personalColumn: ColumnDef<Empleado> = {
     const nombre = fullName(empleado.nombre, empleado.apellido, empleado.segundo_apellido);
     const edad = edadFrom(empleado.fecha_nacimiento);
     const fechaFormatted = formatDateCL(empleado.fecha_nacimiento);
-    
+
     return (
       <div className="info-card">
-        <div className="space-y-2">
-          <div className="font-semibold text-base">
+        <div className="space-y-1.5 flex flex-col justify-center h-full">
+          <div className="font-semibold text-sm text-primary">
             {nombre}
           </div>
-          
-          <div className="text-sm text-muted">
+
+          <div className="text-xs text font-mono">
             {formatRUT(empleado.numero_documento)}
           </div>
-          
-          <div className="text-sm text-subtle">
+
+          <div className="text-xs text-muted">
             {fechaFormatted} ({edad} años)
           </div>
-          
-          <div className="text-xs text-subtle">
+
+          <div className="text-xs text-muted flex items-center gap-2">
             <span>{empleado.sexo}</span>
-            <span className="mx-2">•</span>
+            <span>•</span>
             <span>{empleado.estado_civil}</span>
           </div>
         </div>

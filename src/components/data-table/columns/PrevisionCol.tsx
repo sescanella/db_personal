@@ -6,19 +6,19 @@ export const previsionColumn: ColumnDef<Empleado> = {
   header: 'Previsión',
   cell: ({ row }) => {
     const empleado = row.original;
-    
+
     return (
       <div className="info-card">
-        <div className="space-y-2">
-          <div className="font-semibold text-sm">
+        <div className="space-y-1.5">
+          <div className="font-semibold text-sm text-primary">
             {empleado.fondo_cotizacion}
           </div>
-          
-          <div className="text-sm text-muted">
+
+          <div className="text-xs text-muted">
             {empleado.salud}
           </div>
-          
-          <div className="text-sm text-subtle">
+
+          <div className="text-xs text-muted">
             {empleado.afc}
           </div>
         </div>

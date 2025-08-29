@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run build:*)",
+      "Read(c:\\Users\\sebas\\Downloads/**)",
+      "Read(c:\\Users\\sebas\\OneDrive\\Imágenes\\Capturas de pantalla/**)",
+      "Read(c:\\Users\\sebas\\OneDrive\\Imágenes\\Capturas de pantalla/**)",
+      "Bash(npx tailwindcss:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

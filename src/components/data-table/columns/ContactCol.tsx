@@ -7,37 +7,27 @@ export const contactColumn: ColumnDef<Empleado> = {
   header: 'Contacto',
   cell: ({ row }) => {
     const empleado = row.original;
-    
+
     return (
       <div className="info-card">
-        <div className="space-y-2">
-          {/* J1: Teléfono principal */}
-          <div className="font-semibold text-sm">
+        <div className="space-y-1.5">
+          <div className="font-semibold text-sm text-primary font-mono">
             {formatPhoneCL(empleado.telefono_particular)}
           </div>
-          
-          {/* J2: Email */}
-          <div className="text-xs text-muted truncate" title={empleado.email_personal}>
+
+          <div className="text-xs text font-mono" title={empleado.email_personal}>
             {empleado.email_personal}
           </div>
-          
-          {/* J3: Dirección */}
-          <div className="text-xs text-subtle truncate" title={empleado.direccion}>
+
+          <div className="text-xs text-muted truncate" title={empleado.direccion}>
             {empleado.direccion}
           </div>
-          
-          {/* J4: Contacto emergencia */}
-          {empleado.contacto_emergencia_nombre && (
-            <div className="text-xs text-subtle">
-              <span className="truncate" title={empleado.contacto_emergencia_nombre}>
-                {empleado.contacto_emergencia_nombre}
-              </span>
-              <span className="mx-2">•</span>
-              <span className="font-mono">
-                {formatPhoneCL(empleado.contacto_emergencia_telefono)}
-              </span>
-            </div>
-          )}
+
+          <div className="text-xs text-muted flex items-center gap-2">
+            <span>{empleado.contacto_emergencia_nombre}</span>
+            <span>•</span>
+            <span>{formatPhoneCL(empleado.contacto_emergencia_telefono)}</span>
+          </div>
         </div>
       </div>
     );

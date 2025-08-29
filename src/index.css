@@ -92,11 +92,12 @@
 
 @utility table-grid {
   display: grid;
-  grid-template-columns: 3fr 3fr 1.5fr 1.25fr 1.25fr;
-  gap: 0.5rem;
+  grid-template-columns: 2fr 2.2fr 1.6fr 1.4fr 1fr;
+  gap: 0.75rem;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+  align-items: center;
 }
 
 @utility loading {
@@ -162,26 +163,27 @@
 .table-row {
   transition: all 0.2s ease;
   cursor: pointer;
-  border-bottom: 1px solid #26262B80;
   animation: slideInUp 0.3s ease-out;
+  border-radius: 0.75rem;
+  overflow: hidden;
 }
 
 .table-row:hover {
-  background: rgba(213, 99, 1, 0.5);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  transform: scale(1.002);
+  background: rgba(213, 99, 1, 0.08);
+  box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
 }
 
-.table-row:last-child {
-  border-bottom: none;
-}
 
 .table-cell {
-  transition: colors 0.2s ease;
+  transition: all 0.2s ease;
   display: flex;
+  align-items: center;
   overflow: hidden;
   min-width: 0;
   max-width: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .search-highlight {
@@ -263,13 +265,14 @@
 
 /* Advanced Card Styles */
 .info-card {
-  background: linear-gradient(135deg, #141418, #1B1B20);
+  background: linear-gradient(135deg, #141418);
   border-radius: 0.5rem;
   border: 1px solid #26262BB3;
-  padding: 0.5rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.2s ease;
-  height: 120px;
+  padding: 10px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  height: 100px;
+  max-height: 100px;
   width: 100%;
   max-width: 100%;
   display: flex;
@@ -282,7 +285,9 @@
 }
 
 .info-card:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #1a1a1e, #212126);
 }
 
 .stats-card {
@@ -362,4 +367,23 @@
   color: #6B6B73;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+/* Custom scrollbar for table container */
+.table-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: rgba(38, 38, 43, 0.3);
+  border-radius: 3px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: rgba(213, 99, 1, 0.6);
+  border-radius: 3px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(213, 99, 1, 0.8);
 }

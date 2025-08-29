@@ -12,7 +12,7 @@ import {
 } from '@/components/data-table/columns';
 import { FiltersBar } from '@/components/FiltersBar';
 import { ErrorState } from '@/components/ErrorState';
-import logoBlanco from '@/assets/logo-blanco.svg';
+import logoBlanco from '@/assets/logo-horizontal-blanco.svg';
 
 const columns = [
   personalColumn,
@@ -50,17 +50,17 @@ export function Table() {
 
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-      <div className="max-w-7xl mx-auto p-4 xl:p-6">
+      <div className="max-w-7xl mx-auto p-4 xl:p-4">
         {/* Header */}
         <div className="mb-4">
-          <div className="flex items-center justify-between p-4 h-30">
-            <h1 className="text-2xl font-semibold text-white">
-              GESTIÓN DE EMPLEADOS
+          <div className="flex items-center justify-between p-4 h-20">
+            <h1 className="text-3xl font-mono text-white">
+              BD DEL PERSONAL
             </h1>
             <img
               src={logoBlanco}
               alt="Logo empresa"
-              className="w-30 h-30 object-contain"
+              className="h-15 object-contain"
             />
           </div>
 
