@@ -48,16 +48,33 @@
   border-color: var(--border-input);
 }
 
-@utility btn-primary {
-  @apply rounded-2xl px-4 py-2 min-h-[44px] bg-primary hover:bg-[rgb(191_89_1)];
-  @apply text-white font-medium transition-colors;
-  @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[var(--bg)];
+/* Clases de componentes del THEME.md */
+@utility input-base {
+  @apply bg-surface border border-input rounded-lg px-3 py-2 min-h-[44px] text-base;
+  @apply focus:border-primary focus:ring-1 focus:ring-primary;
+  @apply placeholder:text-muted;
 }
 
-@utility btn-secondary {
-  @apply rounded-2xl px-4 py-2 min-h-[44px] bg-surface hover:bg-elevated;
-  @apply border border-default font-medium transition-colors;
-  @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[var(--bg)];
+@utility select-base {
+  @apply input-base appearance-none pr-10;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23A8A8AE' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+}
+
+@utility btn-primary {
+  @apply rounded-2xl px-4 py-2 min-h-[44px] bg-primary hover:bg-[rgb(191_89_1)];
+  @apply text-white font-medium transition-colors focus-ring;
+}
+
+@utility focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-primary;
+  @apply focus:ring-offset-2 focus:ring-offset-[var(--bg)];
+}
+
+@utility loading {
+  @apply animate-spin rounded-full border-2 border-primary border-t-transparent;
 }
 
 @utility input-base {
