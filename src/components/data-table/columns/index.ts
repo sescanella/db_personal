@@ -1,3 +1,4 @@
+export { nvColumn } from './NVCol';
 export { personalColumn } from './PersonalCol';
 export { contactColumn } from './ContactCol';
 export { bankColumn } from './BankCol';

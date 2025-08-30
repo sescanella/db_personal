@@ -4,6 +4,7 @@ import { listEmpleados, getEmpleadosQueryKey } from '@/services/empleados';
 import type { ListEmpleadosParams } from '@/types/empleados';
 import { DataTable } from '@/components/data-table/DataTable';
 import {
+  nvColumn,
   personalColumn,
   contactColumn,
   bankColumn,
@@ -15,6 +16,7 @@ import { ErrorState } from '@/components/ErrorState';
 import logoBlanco from '@/assets/logo-horizontal-blanco.svg';
 
 const columns = [
+  nvColumn,
   personalColumn,
   contactColumn,
   bankColumn,
@@ -76,6 +78,7 @@ export function Table() {
           {/* Table Header */}
           <div className="p-4 border-b border-default">
             <div className="table-grid font-medium text-lg" style={{ color: '#d56301' }}>
+              <div className="text-center">PROYECTO</div>
               <div className="text-center">PERSONAL</div>
               <div className="text-center">CONTACTO</div>
               <div className="text-center">BANCARIA</div>

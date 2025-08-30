@@ -46,6 +46,9 @@ export async function listEmpleados(params: ListEmpleadosParams = {}): Promise<L
     if (filters.estado_civil) {
       query = query.eq('estado_civil', filters.estado_civil);
     }
+    if (filters.nv) {
+      query = query.eq('nv', filters.nv);
+    }
 
     // Apply sorting
     if (sort) {

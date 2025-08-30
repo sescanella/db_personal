@@ -16,6 +16,9 @@ export const TALLA_INFERIOR_OPTIONS = ['38 (S)', '40 (M)', '42 (M)', '44 (L)', '
 export const EmpleadoSchema = z.object({
   id: z.string().uuid(),
   
+  // Project identification
+  nv: z.string().regex(/^NV[0-9]+$/, 'Código NV debe tener formato NV seguido de números (ej: NV499)'),
+  
   // Personal identity
   nombre: z.string().min(1, 'Nombre es requerido'),
   apellido: z.string().min(1, 'Apellido es requerido'),
@@ -81,6 +84,7 @@ export interface ListEmpleadosParams {
     salud?: string;
     fondo_cotizacion?: string;
     estado_civil?: string;
+    nv?: string;
   };
   page?: number;
   pageSize?: number;

@@ -6,7 +6,9 @@
       "Read(c:\\Users\\sebas\\OneDrive\\Imágenes\\Capturas de pantalla/**)",
       "Read(c:\\Users\\sebas\\OneDrive\\Imágenes\\Capturas de pantalla/**)",
       "Bash(npx tailwindcss:*)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(npm run typecheck:*)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []

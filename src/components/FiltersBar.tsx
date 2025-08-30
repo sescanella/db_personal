@@ -67,7 +67,8 @@ export function FiltersBar({ value, onChange, totalResults }: FiltersBarProps) {
       sexo: '👤',
       salud: '⚕️',
       fondo_cotizacion: '🏦',
-      estado_civil: '💑'
+      estado_civil: '💑',
+      nv: '🏗️'
     };
     return `${labels[key] || '🔍'} ${value}`;
   };
@@ -134,6 +135,18 @@ export function FiltersBar({ value, onChange, totalResults }: FiltersBarProps) {
                     {option.icon} {option.label}
                   </option>
                 ))}
+              </select>
+            </div>
+            
+            <div className="relative">
+              <select
+                value={value.filters?.nv || ''}
+                onChange={(e) => handleFilterChange('nv', e.target.value)}
+                className="select-base min-w-[120px]"
+              >
+                <option value="">🏗️ Todos los NV</option>
+                <option value="NV000">📄 Históricos</option>
+                {/* TODO: Populate dynamically with actual NV codes */}
               </select>
             </div>
             

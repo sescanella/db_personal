@@ -109,7 +109,7 @@
 
 @utility table-grid {
   display: grid;
-  grid-template-columns: 2fr 2.2fr 1.6fr 1.4fr 1fr;
+  grid-template-columns: 0.8fr 2fr 2.2fr 1.6fr 1.4fr 1fr;
   gap: 0.75rem;
   width: 100%;
   max-width: 100%;

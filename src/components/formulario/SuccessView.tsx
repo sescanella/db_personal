@@ -1,6 +1,10 @@
 import React from 'react'
 
-export function SuccessView() {
+interface SuccessViewProps {
+  nvCode?: string
+}
+
+export function SuccessView({ nvCode }: SuccessViewProps) {
   return (
     <div className="text-center py-12 px-4">
       {/* Success Icon */}
@@ -15,11 +19,18 @@ export function SuccessView() {
         ¡Formulario enviado con éxito!
       </h2>
       
-      <p className="text-muted text-base leading-relaxed">
+      <p className="text-muted text-base leading-relaxed mb-4">
         Gracias por completar tu inscripción. 
         <br />
         Hemos recibido tu información correctamente.
       </p>
+
+      {nvCode && (
+        <div className="bg-surface border border-default rounded-lg p-3 inline-block">
+          <div className="text-sm text-muted mb-1">Registrado para proyecto:</div>
+          <div className="text-lg font-mono font-semibold text-orange-400">{nvCode}</div>
+        </div>
+      )}
     </div>
   )
 }

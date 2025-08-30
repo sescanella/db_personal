@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ProgressBarSticky, FormSection, TextInput, DatePickerMobile, Select, CountrySelectISO, EmailInput, PhoneInputIntl, CascadingRegionComuna, AccountNumberInput, SizeSelect, SuccessView, NavigationButtons } from '../components/formulario'
 import { ESTADOS_CIVIL, SEXOS, BANCOS, TIPOS_CUENTA, AFPS, SALUD, AFC, TALLAS_SUPERIOR, TALLAS_INFERIOR, TALLAS_ZAPATO } from '../utils/constants'
 import { toTitleCase } from '../utils/formatters'
 import { supabase } from '../lib/supabase'
 
 interface FormData {
+  // Proyecto
+  nv: string
   // Datos Personales
   nombre: string
   apellido: string
@@ -44,7 +46,10 @@ export function FormularioInscripcion() {
   const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [nvCode, setNvCode] = useState<string | null>(null)
+  const [nvError, setNvError] = useState<string | null>(null)
   const [formData, setFormData] = useState<FormData>({
+    nv: '',
     nombre: '',
     apellido: '',
     segundo_apellido: '',
@@ -72,7 +77,33 @@ export function FormularioInscripcion() {
     talla_inferior: '',
     talla_zapato: ''
   })
-  
+
+  // Extraer código NV de la URL al cargar el componente
+  useEffect(() => {
+    const extractNVFromURL = () => {
+      const urlParams = new URLSearchParams(window.location.search)
+      const nvParam = urlParams.get('nv')
+      
+      if (!nvParam) {
+        setNvError('Código NV requerido. URL debe incluir parámetro ?nv=NV123')
+        return
+      }
+
+      // Validar formato NV + números
+      const nvPattern = /^NV[0-9]+$/
+      if (!nvPattern.test(nvParam)) {
+        setNvError('Código NV inválido. Debe tener formato NV seguido de números (ej: NV499)')
+        return
+      }
+
+      setNvCode(nvParam)
+      setNvError(null)
+      setFormData(prev => ({ ...prev, nv: nvParam }))
+    }
+
+    extractNVFromURL()
+  }, [])
+
   const steps = [
     'Datos Personales',
     'Contacto',
@@ -173,6 +204,7 @@ export function FormularioInscripcion() {
     try {
       // Preparar datos para Supabase
       const empleadoData = {
+        nv: formData.nv,
         nombre: formData.nombre,
         apellido: formData.apellido,
         segundo_apellido: formData.segundo_apellido || null,
@@ -222,6 +254,29 @@ export function FormularioInscripcion() {
     }
   }
 
+  // Si hay error de NV, mostrar pantalla de error
+  if (nvError) {
+    return (
+      <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center p-4">
+        <div className="max-w-md mx-auto bg-surface border border-red-500/30 rounded-2xl p-6 text-center">
+          <div className="text-4xl mb-4">🚫</div>
+          <h1 className="text-xl font-semibold text-white mb-3">
+            Código NV Requerido
+          </h1>
+          <p className="text-muted mb-4">
+            {nvError}
+          </p>
+          <div className="text-sm text-subtle">
+            <strong>Ejemplo de URL válida:</strong><br />
+            <code className="bg-elevated px-2 py-1 rounded">
+              {window.location.origin}/#formulario?nv=NV499
+            </code>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-[var(--bg)]">
       {/* Banner Superior */}
@@ -233,9 +288,17 @@ export function FormularioInscripcion() {
               alt="Logo" 
               className="w-8 h-8"
             />
-            <h1 className="text-lg font-semibold text-white">
-              Formulario de Inscripción
-            </h1>
+            <div className="flex-1">
+              <h1 className="text-lg font-semibold text-white">
+                Formulario de Inscripción
+              </h1>
+              {nvCode && (
+                <div className="text-sm">
+                  <span className="text-muted">Proyecto: </span>
+                  <span className="text-orange-400 font-mono font-semibold">{nvCode}</span>
+                </div>
+              )}
+            </div>
           </div>
           <div className="text-sm text-muted">
             Tiempo estimado: 8-10 minutos
@@ -253,7 +316,7 @@ export function FormularioInscripcion() {
       <div className="max-w-lg mx-auto p-4 pb-20">
         {/* Vista de Éxito */}
         {isSubmitted ? (
-          <SuccessView />
+          <SuccessView nvCode={nvCode || undefined} />
         ) : (
           <form className="space-y-6">
           {/* Sección: Datos Personales */}
