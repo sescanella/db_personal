@@ -13,6 +13,7 @@ import {
 } from '@/components/data-table/columns';
 import { FiltersBar } from '@/components/FiltersBar';
 import { ErrorState } from '@/components/ErrorState';
+import { LinkGeneratorModal } from '@/components/LinkGeneratorModal';
 import logoBlanco from '@/assets/logo-horizontal-blanco.svg';
 
 const columns = [
@@ -30,6 +31,7 @@ export function Table() {
     page: 1,
     pageSize: 100, // Load more for virtualization
   });
+  const [isLinkGeneratorOpen, setIsLinkGeneratorOpen] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
@@ -59,11 +61,21 @@ export function Table() {
             <h1 className="text-3xl font-mono text-white">
               BD DEL PERSONAL
             </h1>
-            <img
-              src={logoBlanco}
-              alt="Logo empresa"
-              className="h-15 object-contain"
-            />
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setIsLinkGeneratorOpen(true)}
+                className="btn-primary flex items-center gap-2 px-4 py-2"
+                title="Administrar Links de Proyecto"
+              >
+                <span>🔗</span>
+                <span className="hidden sm:inline">Administrar Links</span>
+              </button>
+              <img
+                src={logoBlanco}
+                alt="Logo empresa"
+                className="h-15 object-contain"
+              />
+            </div>
           </div>
 
           <FiltersBar
@@ -150,6 +162,12 @@ export function Table() {
           )}
         </div>
       </div>
+
+      {/* Link Generator Modal */}
+      <LinkGeneratorModal 
+        isOpen={isLinkGeneratorOpen}
+        onClose={() => setIsLinkGeneratorOpen(false)}
+      />
     </div>
   );
 }
