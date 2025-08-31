@@ -108,8 +108,8 @@ export function Table() {
           {/* Table Content */}
           <div
             ref={scrollRef}
-            className="h-[700px] overflow-y-auto overflow-x-hidden"
-            style={{ contain: 'strict' }}
+            className="h-[700px] overflow-y-auto w-full"
+            style={{ minWidth: '100%' }}
           >
             {isLoading && (
               <div className="flex items-center justify-center py-20">

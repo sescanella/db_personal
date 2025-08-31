@@ -28,7 +28,7 @@ export function DataTable({ data, columns }: DataTableProps) {
         {rows.map((row: Row<Empleado>, index) => (
           <div
             key={row.id}
-            className="table-row w-full px-4 py-4 min-h-[140px] flex items-center"
+            className="table-row w-full py-4 min-h-[140px]"
             style={{
               animationDelay: `${index * 0.03}s`,
             }}

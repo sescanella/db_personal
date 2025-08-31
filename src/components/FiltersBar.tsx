@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/lib/supabase';
 import type { ListEmpleadosParams } from '@/types/empleados';
 
 interface FiltersBarProps {
@@ -18,6 +20,25 @@ const SORT_OPTIONS = [
 export function FiltersBar({ value, onChange, totalResults, onOpenLinkGenerator }: FiltersBarProps) {
   const [searchInput, setSearchInput] = useState(value.search || '');
   const [isSearching, setIsSearching] = useState(false);
+
+  // Get unique NV codes from database
+  const { data: nvCodes } = useQuery({
+    queryKey: ['unique-nv-codes'],
+    queryFn: async (): Promise<string[]> => {
+      const { data, error } = await supabase
+        .from('empleados')
+        .select('nv')
+        .not('nv', 'is', null)
+        .order('nv', { ascending: true });
+
+      if (error) throw error;
+
+      // Get unique NV codes
+      const uniqueNVs = [...new Set(data.map(item => item.nv))];
+      return uniqueNVs;
+    },
+    staleTime: 30000, // Cache for 30 seconds
+  });
 
   // Debounce search with loading state
   useEffect(() => {
@@ -155,8 +176,11 @@ export function FiltersBar({ value, onChange, totalResults, onOpenLinkGenerator 
                 className="select-base min-w-[120px]"
               >
                 <option value="">🏗️ Todas las NV</option>
-                <option value="NV000">📄 Históricos</option>
-                {/* TODO: Populate dynamically with actual NV codes */}
+                {nvCodes?.map((nv) => (
+                  <option key={nv} value={nv}>
+                    {nv === 'NV000' ? '📄' : '🏗️'} {nv === 'NV000' ? 'Históricos' : nv}
+                  </option>
+                ))}
               </select>
             </div>
 
