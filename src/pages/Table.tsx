@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 import { useQuery } from '@tanstack/react-query';
 import { listEmpleados, getEmpleadosQueryKey } from '@/services/empleados';
 import type { ListEmpleadosParams } from '@/types/empleados';
@@ -14,7 +15,7 @@ import {
 import { FiltersBar } from '@/components/FiltersBar';
 import { ErrorState } from '@/components/ErrorState';
 import { LinkGeneratorModal } from '@/components/LinkGeneratorModal';
-import logoBlanco from '@/assets/logo-horizontal-blanco.svg';
+import logoBlanco from '@/assets/logo-simple-blanco.svg';
 
 const columns = [
   nvColumn,
@@ -26,6 +27,8 @@ const columns = [
 ];
 
 export function Table() {
+  usePageTitle('Tabla de Empleados');
+  
   const [params, setParams] = useState<ListEmpleadosParams>({
     sort: { field: 'created_at', asc: false },
     page: 1,
@@ -58,14 +61,17 @@ export function Table() {
         {/* Header */}
         <div className="mb-4">
           <div className="flex items-center justify-between p-4 h-20">
-            <h1 className="text-3xl font-mono text-white">
-              BD DEL PERSONAL
-            </h1>
-            <img
-              src={logoBlanco}
-              alt="Logo empresa"
-              className="h-15 object-contain"
-            />
+            <div className="flex items-center gap-3">
+              <img
+                src={logoBlanco}
+                alt="Logo empresa"
+                className="h-8 object-contain"
+              />
+              <h1 className="text-3xl font-mono text-white">
+                BD DEL PERSONAL
+              </h1>
+            </div>
+            <div></div>
           </div>
 
           <FiltersBar

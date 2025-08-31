@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { usePageTitle } from '../hooks/usePageTitle'
 import { ProgressBarSticky, FormSection, TextInput, DatePickerMobile, Select, CountrySelectISO, EmailInput, PhoneInputIntl, CascadingRegionComuna, AccountNumberInput, SizeSelect, SuccessView, NavigationButtons } from '../components/formulario'
 import { ESTADOS_CIVIL, SEXOS, BANCOS, TIPOS_CUENTA, AFPS, SALUD, AFC, TALLAS_SUPERIOR, TALLAS_INFERIOR, TALLAS_ZAPATO } from '../utils/constants'
 import { toTitleCase } from '../utils/formatters'
@@ -43,6 +44,8 @@ interface FormData {
 }
 
 export function FormularioInscripcion() {
+  usePageTitle('Formulario de Inscripción');
+  
   const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -284,9 +287,9 @@ export function FormularioInscripcion() {
         <div className="max-w-lg mx-auto p-4">
           <div className="flex items-center gap-3 mb-2">
             <img 
-              src="/src/assets/logo-blanco.svg" 
+              src="/src/assets/logo-simple-blanco.svg" 
               alt="Logo" 
-              className="w-8 h-8"
+              className="h-5 object-contain"
             />
             <div className="flex-1">
               <h1 className="text-lg font-semibold text-white">

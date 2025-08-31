@@ -4,7 +4,8 @@ import { Table } from '@/pages/Table';
 import { FormularioInscripcion } from '@/pages/FormularioInscripcion';
 
 export default function App() {
-  const showForm = window.location.hash === '#formulario';
+  const path = window.location.pathname;
+  const showForm = path === '/formulario' || window.location.hash === '#formulario';
   
   return (
     <QueryClientProvider client={queryClient}>

@@ -41,7 +41,7 @@ export function LinkGeneratorDashboard({ onClose, sessionEndTime, onExtendSessio
       return Object.entries(nvCounts).map(([nv, count]) => ({
         nv,
         count,
-        url: `${window.location.origin}/#formulario?nv=${nv}`
+        url: `${window.location.origin}/formulario?nv=${nv}`
       }));
     }
   });
@@ -96,7 +96,7 @@ export function LinkGeneratorDashboard({ onClose, sessionEndTime, onExtendSessio
 
     try {
       // Generate URL
-      const url = `${window.location.origin}/#formulario?nv=${nvCode}`;
+      const url = `${window.location.origin}/formulario?nv=${nvCode}`;
       
       // Copy to clipboard
       await navigator.clipboard.writeText(url);
