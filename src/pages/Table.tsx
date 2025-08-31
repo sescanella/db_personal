@@ -61,27 +61,18 @@ export function Table() {
             <h1 className="text-3xl font-mono text-white">
               BD DEL PERSONAL
             </h1>
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => setIsLinkGeneratorOpen(true)}
-                className="btn-primary flex items-center gap-2 px-4 py-2"
-                title="Administrar Links de Proyecto"
-              >
-                <span>🔗</span>
-                <span className="hidden sm:inline">Administrar Links</span>
-              </button>
-              <img
-                src={logoBlanco}
-                alt="Logo empresa"
-                className="h-15 object-contain"
-              />
-            </div>
+            <img
+              src={logoBlanco}
+              alt="Logo empresa"
+              className="h-15 object-contain"
+            />
           </div>
 
           <FiltersBar
             value={params}
             onChange={handleParamsChange}
             totalResults={response?.count || 0}
+            onOpenLinkGenerator={() => setIsLinkGeneratorOpen(true)}
           />
         </div>
 
@@ -89,12 +80,21 @@ export function Table() {
         <div className="glass-effect rounded-2xl overflow-hidden">
           {/* Table Header */}
           <div className="p-4 border-b border-default">
-            <div className="table-grid font-medium text-lg" style={{ color: '#d56301' }}>
+            <div className="grid font-medium text-lg items-center gap-3" 
+                 style={{ 
+                   color: '#d56301',
+                   gridTemplateColumns: '0.8fr 1px 2.5fr 1px 2.6fr 1px 1.3fr 1px 1.2fr 1px 1fr'
+                 }}>
               <div className="text-center">PROYECTO</div>
+              <div className="border-l border-primary/30 h-6 justify-self-center"></div>
               <div className="text-center">PERSONAL</div>
+              <div className="border-l border-primary/30 h-6 justify-self-center"></div>
               <div className="text-center">CONTACTO</div>
+              <div className="border-l border-primary/30 h-6 justify-self-center"></div>
               <div className="text-center">BANCARIA</div>
+              <div className="border-l border-primary/30 h-6 justify-self-center"></div>
               <div className="text-center">PREVISIÓN</div>
+              <div className="border-l border-primary/30 h-6 justify-self-center"></div>
               <div className="text-center">TALLAS</div>
             </div>
           </div>

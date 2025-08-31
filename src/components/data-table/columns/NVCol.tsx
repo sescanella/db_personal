@@ -10,9 +10,9 @@ export const nvColumn: ColumnDef<Empleado> = {
 
     return (
       <div className="info-card">
-        <div className="flex flex-col justify-center h-full">
+        <div>
           <div 
-            className={`font-mono text-sm font-semibold px-2 py-1 rounded text-center cursor-pointer hover:opacity-80 transition-opacity ${
+            className={`font-mono text-xs font-semibold px-3 py-2 rounded text-center cursor-pointer hover:opacity-80 transition-opacity ${
               isHistorical 
                 ? 'bg-gray-100 text-gray-600 border border-gray-300' 
                 : 'bg-orange-50 text-orange-800 border border-orange-200'

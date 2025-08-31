@@ -5,6 +5,7 @@ interface FiltersBarProps {
   value: ListEmpleadosParams;
   onChange: (params: ListEmpleadosParams) => void;
   totalResults?: number;
+  onOpenLinkGenerator?: () => void;
 }
 
 const SORT_OPTIONS = [
@@ -14,7 +15,7 @@ const SORT_OPTIONS = [
   { value: JSON.stringify({ field: 'nombre', asc: false }), label: 'Nombre Z-A', icon: '🔤' },
 ];
 
-export function FiltersBar({ value, onChange, totalResults }: FiltersBarProps) {
+export function FiltersBar({ value, onChange, totalResults, onOpenLinkGenerator }: FiltersBarProps) {
   const [searchInput, setSearchInput] = useState(value.search || '');
   const [isSearching, setIsSearching] = useState(false);
 
@@ -88,10 +89,19 @@ export function FiltersBar({ value, onChange, totalResults }: FiltersBarProps) {
         <div className="flex flex-col xl:flex-row gap-4 xl:items-center">
           {/* Results Counter */}
           {totalResults !== undefined && (
-            <div className="bg-surface border border-default rounded-lg px-3 py-2 min-w-[140px] text-center">
-              <div className="text-sm font-medium flex items-center justify-center gap-2">
-                <span>📊</span>
-                <span className="text-primary">{totalResults.toLocaleString()}</span> Registros
+            <div className="bg-surface border border-default rounded-lg px-3 py-2 min-h-[44px] min-w-[130px] flex items-center justify-center">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                  <span className="text-primary text-sm">👥</span>
+                </div>
+                <div className="text-left">
+                  <div className="text-lg font-bold text-primary leading-none">
+                    {totalResults.toLocaleString()}
+                  </div>
+                  <div className="text-xs text-muted leading-none mt-0.5">
+                    Registros
+                  </div>
+                </div>
               </div>
             </div>
           )}
@@ -144,11 +154,24 @@ export function FiltersBar({ value, onChange, totalResults }: FiltersBarProps) {
                 onChange={(e) => handleFilterChange('nv', e.target.value)}
                 className="select-base min-w-[120px]"
               >
-                <option value="">🏗️ Todos los NV</option>
+                <option value="">🏗️ Todas las NV</option>
                 <option value="NV000">📄 Históricos</option>
                 {/* TODO: Populate dynamically with actual NV codes */}
               </select>
             </div>
+
+            {onOpenLinkGenerator && (
+              <div className="relative">
+                <button
+                  onClick={onOpenLinkGenerator}
+                  className="bg-surface border border-input rounded-lg px-3 py-2 min-h-[44px] min-w-[80px] flex items-center justify-center gap-2 text-base hover:border-primary hover:bg-primary/5 hover:scale-105 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all duration-200 ease-in-out"
+                  title="Administrar Links de Proyecto"
+                >
+                  <span>🔗</span>
+                  <span>Links</span>
+                </button>
+              </div>
+            )}
             
             {hasActiveFilters && (
               <button

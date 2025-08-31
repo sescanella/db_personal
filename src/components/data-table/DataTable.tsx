@@ -28,16 +28,16 @@ export function DataTable({ data, columns }: DataTableProps) {
         {rows.map((row: Row<Empleado>, index) => (
           <div
             key={row.id}
-            className="table-row w-full px-4 py-3 h-30"
+            className="table-row w-full px-4 py-4 min-h-[140px] flex items-center"
             style={{
               animationDelay: `${index * 0.03}s`,
             }}
           >
-            <div className="table-grid h-full">
+            <div className="table-grid h-full items-center">
               {row.getVisibleCells().map((cell) => (
                 <div
                   key={cell.id}
-                  className="table-cell"
+                  className="table-cell flex items-center justify-center"
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </div>
