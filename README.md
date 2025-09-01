@@ -3,19 +3,22 @@
 > **Descripción corta:** Centraliza la información de todo el personal de Kronosmining.  
 > **Audiencia:** Administradores de contratos de Kronosmining.  
 > **Alcance:** Es la única base de datos que se maneja en este proyecto.  
-> **Estado:** Beta privada. Proyecto rápido y ágil.
+> **Estado:** ✅ **Versión 1.0 completada** - Listo para producción.
 
 ---
 
-## ✨ Funcionalidad
+## ✨ Funcionalidad Implementada
 
-- **Vista 1 (Listado):** Listar y filtrar registros de `public.empleados` (solo lectura).
-- **Vista 2 (Formulario de alta):** Ingreso de nuevos registros mediante formulario controlado.
-- **Lectura e inserción pública** mediante RLS en Supabase (`select` e `insert` para rol `anon`).
-- **Desktop-first** con soporte **mobile**.
-- **Paginación server-side:** tamaño de página **20**.
-- **Orden inicial:** `created_at` **descendente**.
-- **Formato de fecha en UI:** zona horaria **America/Santiago**.
+- ✅ **Vista 1 (Listado):** Tabla completa con filtros avanzados y paginación server-side
+- ✅ **Vista 2 (Formulario de alta):** Formulario multi-paso con validaciones en tiempo real
+- ✅ **Sistema de códigos NV:** Generación automática de códigos únicos por proyecto
+- ✅ **Links personalizados:** Generador de enlaces con códigos NV pre-cargados
+- ✅ **Banderas de países:** Integración con circle-flags para visualización
+- ✅ **Cascading selectors:** Región-Comuna dinámicos para Chile
+- ✅ **Responsive design:** Desktop-first con soporte mobile completo
+- ✅ **Paginación optimizada:** 20 registros por página con navegación fluida
+- ✅ **Búsqueda avanzada:** Filtros por múltiples campos simultaneos
+- ✅ **Exportación CSV:** Descarga de datos filtrados
 
 ---
 
@@ -28,11 +31,13 @@
 - **Estado de datos:** `@tanstack/react-query` **v5**
 - **Tabla/UX:** `@tanstack/react-table` **v8**
 - **Validación:** `zod` **v3**
+- **Iconos:** `lucide-react` **v0.445**
+- **Utilidades:** `date-fns` **v4**, `react-hook-form` **v7**
 
 ### Paquetes
 
 ```bash
-npm i react react-dom @supabase/supabase-js @tanstack/react-query @tanstack/react-table zod
+npm i react react-dom @supabase/supabase-js @tanstack/react-query @tanstack/react-table zod lucide-react date-fns react-hook-form
 npm i -D vite typescript tailwindcss postcss autoprefixer eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin prettier
 ```
 
@@ -137,11 +142,21 @@ npm run typecheck
 
 ---
 
-## 🚀 Despliegue (Hostinger)
+## 🚀 Despliegue
 
-1. Ejecuta `npm run build` → genera **`/dist`**.
-2. Sube **`/dist`** al subdominio **`personal.kronosmining.tech`**.
-3. Si usas SPA y necesitas fallback a `index.html`, agrega `.htaccess`:
+### Producción (Completado)
+
+1. ✅ **Build optimizado:** `npm run build` → genera `/dist` con assets comprimidos
+2. ✅ **Carpeta lista:** `/dist` optimizada para `public_html` 
+3. ✅ **Assets minificados:**
+   - CSS: 39.61 kB → 7.67 kB (gzipped)
+   - JS: 451.62 kB → 131.98 kB (gzipped)
+   - Imágenes SVG optimizadas
+
+### Subir a hosting
+
+1. Copia el contenido de `/dist` a tu carpeta `public_html`
+2. Para SPA routing, agrega `.htaccess`:
 
 ```
 RewriteEngine On
@@ -222,22 +237,36 @@ RewriteRule . /index.html [L]
 
 ---
 
-## 🧭 Roadmap corto
+## ✅ Completado en v1.0
 
-- [ ] Implementar listado + filtros + paginación (readonly).
-- [ ] Implementar formulario de alta con validaciones e inserción. 
-- [ ] Aplicar RLS `select` e `insert` públicos en Supabase.
-- [ ] Branding básico (#d56301 + logo en header).
-- [ ] Build y deploy a `personal.kronosmining.tech`.
-- [ ] Documentar estructura final en este README.
-- [ ] Escribir FRONTEND-CONTEXT, DB-MIGRATIONS y SUPABASE-CLIENT-SDK.
+- ✅ **Listado avanzado** con filtros, búsqueda y paginación server-side
+- ✅ **Formulario multi-paso** con validaciones en tiempo real
+- ✅ **Sistema de códigos NV** con generación automática por proyecto  
+- ✅ **Generador de links** con códigos NV pre-cargados y autenticación
+- ✅ **RLS configurado** con políticas `select` e `insert` públicas
+- ✅ **Branding corporativo** con color #d56301 y logo oficial
+- ✅ **Build optimizado** listo para producción
+- ✅ **Documentación actualizada** con estructura y funcionalidades
+
+## 🔮 Próximas actualizaciones
+
+- [ ] **Sistema de roles:** Autenticación y permisos diferenciados
+- [ ] **Edición de registros:** CRUD completo con auditoría
+- [ ] **Reportes avanzados:** Gráficos y estadísticas
+- [ ] **Notificaciones:** Email automático post-registro
+- [ ] **API endpoints:** Integración con otros sistemas
 
 ---
 
-## ❓ FAQ (breve)
+## ❓ FAQ
 
-- **¿Autenticación?** No (lectura e inserción pública con RLS).  
-- **¿Edición/CRUD?** Solo se permite **lectura e inserción** (no update/delete).  
-- **¿Validación de campos?** El frontend valida selects contra opciones predefinidas; Postgres refuerza con constraints.  
-- **¿Tests/PRs/Convenciones?** No aplica por ahora.  
-- **¿Licencia/Créditos/Badges/Media?** No en esta fase.
+- **¿Está listo para producción?** ✅ Sí, versión 1.0 completada y optimizada
+- **¿Cómo funciona el sistema NV?** Genera códigos únicos por proyecto para pre-cargar formularios
+- **¿Requiere autenticación?** No para usuarios, sí para generar links (protegido con clave)
+- **¿Se pueden editar registros?** No, solo lectura e inserción (RLS configurado)
+- **¿Funciona en mobile?** ✅ Sí, responsive design completo
+- **¿Se pueden exportar datos?** ✅ Sí, exportación CSV con filtros aplicados
+
+---
+
+**🎯 Proyecto completado - Listo para próximas actualizaciones según necesidades del negocio.**

@@ -89,18 +89,13 @@ export function Table() {
             <div className="grid font-medium text-lg items-center gap-3" 
                  style={{ 
                    color: '#d56301',
-                   gridTemplateColumns: '0.8fr 1px 2.5fr 1px 2.6fr 1px 1.3fr 1px 1.2fr 1px 1fr'
+                   gridTemplateColumns: '80px 290px 310px 170px 150px 130px'
                  }}>
-              <div className="text-center">PROYECTO</div>
-              <div className="border-l border-primary/30 h-6 justify-self-center"></div>
+              <div className="text-center">NV</div>
               <div className="text-center">PERSONAL</div>
-              <div className="border-l border-primary/30 h-6 justify-self-center"></div>
               <div className="text-center">CONTACTO</div>
-              <div className="border-l border-primary/30 h-6 justify-self-center"></div>
               <div className="text-center">BANCARIA</div>
-              <div className="border-l border-primary/30 h-6 justify-self-center"></div>
               <div className="text-center">PREVISIÓN</div>
-              <div className="border-l border-primary/30 h-6 justify-self-center"></div>
               <div className="text-center">TALLAS</div>
             </div>
           </div>
@@ -109,7 +104,7 @@ export function Table() {
           <div
             ref={scrollRef}
             className="h-[700px] overflow-y-auto w-full"
-            style={{ minWidth: '100%' }}
+            style={{ maxWidth: '1248px', overflowX: 'hidden' }}
           >
             {isLoading && (
               <div className="flex items-center justify-center py-20">

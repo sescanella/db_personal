@@ -106,10 +106,6 @@ export function LinkGeneratorModal({ isOpen, onClose }: LinkGeneratorModalProps)
     return Math.max(0, Math.ceil((lockoutEndTime - Date.now()) / 1000));
   };
 
-  const getRemainingSessionTime = () => {
-    if (!sessionEndTime) return 0;
-    return Math.max(0, Math.ceil((sessionEndTime - Date.now()) / 1000));
-  };
 
   const extendSession = () => {
     const newEndTime = Date.now() + SESSION_TIMEOUT;

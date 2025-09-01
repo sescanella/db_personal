@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import regionesData from '../../../docs/comunas-regiones.json'
 
 interface Region {
@@ -20,8 +20,6 @@ interface CascadingRegionComunaProps {
 }
 
 export function CascadingRegionComuna({ 
-  regionName,
-  comunaName,
   required = false, 
   regionValue = '', 
   comunaValue = '',

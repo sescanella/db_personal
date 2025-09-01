@@ -1,4 +1,3 @@
-import React from 'react'
 
 interface ProgressBarStickyProps {
   steps: string[]
@@ -6,7 +5,7 @@ interface ProgressBarStickyProps {
 }
 
 export function ProgressBarSticky({ steps, currentStep }: ProgressBarStickyProps) {
-  const progress = (currentStep / steps.length) * 100
+  const progress = ((currentStep - 1) / steps.length) * 100
 
   return (
     <div className="sticky top-0 z-50 bg-[var(--bg)] border-b border-default p-3">

@@ -23,7 +23,7 @@ export function DataTable({ data, columns }: DataTableProps) {
   const { rows } = table.getRowModel();
 
   return (
-    <div className="w-full max-h-[calc(100vh-280px)] overflow-y-auto table-container">
+    <div className="w-full h-full overflow-y-auto table-container">
       <div className="space-y-3 p-4">
         {rows.map((row: Row<Empleado>, index) => (
           <div

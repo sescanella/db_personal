@@ -10,6 +10,16 @@
   color-scheme: dark;
   --color-primary: 213 99 1;
   --color-primary-hover: 191 89 1;
+  --color-blue: 54 83 150;
+  --color-green: 91 146 68;
+  --color-purple: 93 52 139;
+  --color-gold: 213 166 1;
+  --color-gray: 78 78 78;
+  --color-blue-dark: 42 64 115;
+  --color-green-dark: 71 115 54;
+  --color-purple-dark: 74 41 112;
+  --color-gold-dark: 184 144 1;
+  --color-gray-dark: 58 58 58;
   --bg: #0B0B0F;
   --card: #141418;
   --card-elevated: #1B1B20;
@@ -46,6 +56,69 @@
 
 @utility border-input {
   border-color: var(--border-input);
+}
+
+/* Colores auxiliares para tags */
+@utility bg-aux-blue {
+  background: rgb(var(--color-blue));
+}
+
+@utility bg-aux-green {
+  background: rgb(var(--color-green));
+}
+
+@utility bg-aux-purple {
+  background: rgb(var(--color-purple));
+}
+
+@utility bg-aux-gold {
+  background: rgb(var(--color-gold));
+}
+
+@utility bg-aux-gray {
+  background: rgb(var(--color-gray));
+}
+
+/* Variantes dark para mejor contraste con texto blanco */
+@utility bg-aux-blue-dark {
+  background: rgb(var(--color-blue-dark));
+}
+
+@utility bg-aux-green-dark {
+  background: rgb(var(--color-green-dark));
+}
+
+@utility bg-aux-purple-dark {
+  background: rgb(var(--color-purple-dark));
+}
+
+@utility bg-aux-gold-dark {
+  background: rgb(var(--color-gold-dark));
+}
+
+@utility bg-aux-gray-dark {
+  background: rgb(var(--color-gray-dark));
+}
+
+/* Clases de borde para colores auxiliares */
+@utility border-aux-blue {
+  border-color: rgb(var(--color-blue));
+}
+
+@utility border-aux-green {
+  border-color: rgb(var(--color-green));
+}
+
+@utility border-aux-purple {
+  border-color: rgb(var(--color-purple));
+}
+
+@utility border-aux-gold {
+  border-color: rgb(var(--color-gold));
+}
+
+@utility border-aux-gray {
+  border-color: rgb(var(--color-gray));
 }
 
 /* Clases de componentes del THEME.md */
@@ -109,10 +182,10 @@
 
 @utility table-grid {
   display: grid;
-  grid-template-columns: 120px 300px 320px 180px 160px 140px;
+  grid-template-columns: 80px 290px 310px 170px 150px 130px;
   gap: 0.75rem;
-  width: 1220px !important;
-  min-width: 1220px !important;
+  width: 1130px !important;
+  min-width: 1130px !important;
   box-sizing: border-box;
   align-items: center;
 }
