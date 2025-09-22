@@ -129,9 +129,9 @@ export function FormularioInscripcion() {
       value = toTitleCase(value)
     }
 
-    // Limpiar número de documento (solo dígitos)
+    // Limpiar número de documento (dígitos y letras, sin espacios ni caracteres especiales)
     if (field === 'numero_documento') {
-      value = value.replace(/\D/g, '')
+      value = value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase()
     }
 
     setFormData(prev => ({ ...prev, [field]: value }))
@@ -158,7 +158,7 @@ export function FormularioInscripcion() {
     const value = e.target.value.replace(/\D/g, '').slice(0, 3) // Solo números, máximo 3
     setVerificationCode(value)
     setVerificationError(null)
-    
+
     // Validar automáticamente cuando tenga 3 dígitos
     if (value.length === 3) {
       validateVerificationCode(value)
@@ -168,7 +168,7 @@ export function FormularioInscripcion() {
   // Validar código de verificación
   const validateVerificationCode = (code: string) => {
     if (!nvCode) return
-    
+
     const expectedCode = nvCode.replace('NV', '')
     if (code === expectedCode) {
       setIsAuthenticated(true)
@@ -442,7 +442,7 @@ export function FormularioInscripcion() {
 
                 <TextInput
                   name="numero_documento"
-                  label="Número de Documento"
+                  label="RUN/RUT"
                   required
                   value={formData.numero_documento}
                   onChange={handleInputChange('numero_documento')}
